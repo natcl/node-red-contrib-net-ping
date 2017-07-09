@@ -1,0 +1,16 @@
+{
+  "name": "template-example",
+  "version": "0.0.1",
+  "description": "Node-RED template example project",
+  "dependencies": {
+    "node-red": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/natcl/node-red-contrib-net-ping.git"
+  },
+  "keywords": ["node-red", "template"],
+  "scripts": {
+    "start": "node node_modules/node-red/red.js -v -u ."
+  }
+}
