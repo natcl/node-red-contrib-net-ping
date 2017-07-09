@@ -1,0 +1,75 @@
+[
+    {
+        "id": "f2603378.52c44",
+        "type": "tab",
+        "label": "Flow 1"
+    },
+    {
+        "id": "a0c87cea.d6a478",
+        "type": "net-ping-node",
+        "z": "f2603378.52c44",
+        "name": "",
+        "x": 402,
+        "y": 213,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aef09406.18aff",
+        "type": "inject",
+        "z": "f2603378.52c44",
+        "name": "",
+        "topic": "",
+        "payload": "127.0.0.1",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 211,
+        "y": 187,
+        "wires": [
+            [
+                "a0c87cea.d6a478"
+            ]
+        ]
+    },
+    {
+        "id": "e116f7d3.2eae",
+        "type": "inject",
+        "z": "f2603378.52c44",
+        "name": "",
+        "topic": "",
+        "payload": "127.0.1.1",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 221,
+        "y": 234,
+        "wires": [
+            [
+                "a0c87cea.d6a478"
+            ]
+        ]
+    },
+    {
+        "id": "206316e0.3ecbda",
+        "type": "inject",
+        "z": "f2603378.52c44",
+        "name": "",
+        "topic": "",
+        "payload": "192.168.0.10",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 226,
+        "y": 288,
+        "wires": [
+            [
+                "a0c87cea.d6a478"
+            ]
+        ]
+    }
+]
