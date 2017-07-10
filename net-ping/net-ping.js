@@ -14,7 +14,8 @@ module.exports = function(RED) {
             var session = ping.createSession(options);
             session.on('error', (error) => node.error(error));
             for (var i = 0; i < targets.length; i++) {
-                session.pingHost(targets[i], function(error, target) {
+                session.pingHost(targets[i], function(error, target, sent, rcvd) {
+                    const ms = rcvd - sent;
                     msg.topic = target;
                     if (error) {
                         if (error instanceof ping.RequestTimedOutError) {
@@ -25,7 +26,7 @@ module.exports = function(RED) {
                             node.send(msg);
                         }
                     } else {
-                        msg.payload = true;
+                        msg.payload = ms;
                         node.send(msg);
                     }
                 });
