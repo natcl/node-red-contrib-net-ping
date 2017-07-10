@@ -5,32 +5,31 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-        this.on('input', function(msg) {
-            var targets = msg.payload;
-            const options = {
-                retries: 1,
-                timeout: 2000
-            };
-            var session = ping.createSession(options);
-            session.on('error', (error) => node.error(error));
-            for (var i = 0; i < targets.length; i++) {
-                session.pingHost(targets[i], function(error, target, sent, rcvd) {
-                    const ms = rcvd - sent;
-                    msg.topic = target;
-                    if (error) {
-                        if (error instanceof ping.RequestTimedOutError) {
-                            msg.payload = false;
-                            node.send(msg);
-                        } else {
-                            msg.payload = false;
-                            node.send(msg);
-                        }
+        const options = {
+            retries: 1,
+            timeout: 2000
+        };
+
+        node.session = ping.createSession(options);
+        node.session.on('error', (error) => node.error(error));
+
+        node.on('input', function(msg) {
+            node.session.pingHost(msg.host, function(error, target, sent, rcvd) {
+                const ms = rcvd - sent;
+                msg.topic = target;
+                if (error) {
+                    if (error instanceof ping.RequestTimedOutError) {
+                        msg.payload = false;
+                        node.send(msg);
                     } else {
-                        msg.payload = ms;
+                        msg.payload = false;
                         node.send(msg);
                     }
-                });
-            }
+                } else {
+                    msg.payload = ms;
+                    node.send(msg);
+                }
+            });
         });
     }
     RED.nodes.registerType("net-ping-node", NetPingNode);
