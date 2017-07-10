@@ -5,17 +5,6 @@
         "label": "Flow 1"
     },
     {
-        "id": "a0c87cea.d6a478",
-        "type": "net-ping-node",
-        "z": "f2603378.52c44",
-        "name": "",
-        "x": 402,
-        "y": 213,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "aef09406.18aff",
         "type": "inject",
         "z": "f2603378.52c44",
@@ -30,7 +19,7 @@
         "y": 187,
         "wires": [
             [
-                "a0c87cea.d6a478"
+                "aebbe4c4.0f346"
             ]
         ]
     },
@@ -46,10 +35,10 @@
         "crontab": "",
         "once": false,
         "x": 221,
-        "y": 234,
+        "y": 236,
         "wires": [
             [
-                "a0c87cea.d6a478"
+                "aebbe4c4.0f346"
             ]
         ]
     },
@@ -68,7 +57,7 @@
         "y": 288,
         "wires": [
             [
-                "a0c87cea.d6a478"
+                "aebbe4c4.0f346"
             ]
         ]
     },
@@ -77,6 +66,9 @@
         "type": "net-ping-node",
         "z": "f2603378.52c44",
         "name": "",
+        "host": "",
+        "timeout": "5",
+        "retries": "1",
         "x": 852,
         "y": 347,
         "wires": [
@@ -253,11 +245,66 @@
         "type": "debug",
         "z": "f2603378.52c44",
         "name": "",
-        "active": true,
+        "active": false,
         "console": "false",
         "complete": "false",
         "x": 1066,
         "y": 604,
         "wires": []
+    },
+    {
+        "id": "86f628db.173a5",
+        "type": "debug",
+        "z": "f2603378.52c44",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 732,
+        "y": 163,
+        "wires": []
+    },
+    {
+        "id": "aebbe4c4.0f346",
+        "type": "change",
+        "z": "f2603378.52c44",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "host",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 412,
+        "y": 264,
+        "wires": [
+            [
+                "5e65d1ae.b5957"
+            ]
+        ]
+    },
+    {
+        "id": "5e65d1ae.b5957",
+        "type": "net-ping-node",
+        "z": "f2603378.52c44",
+        "name": "",
+        "host": "",
+        "timeout": "5",
+        "retries": "1",
+        "x": 509,
+        "y": 168,
+        "wires": [
+            [
+                "86f628db.173a5"
+            ]
+        ]
     }
 ]

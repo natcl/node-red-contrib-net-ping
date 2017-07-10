@@ -1,27 +1,60 @@
-<script type="text/javascript">
-    RED.nodes.registerType('net-ping-node',{
-        category: 'function',
-        color: '#a6bbcf',
-        defaults: {
-            name: {value:""}
-        },
-        inputs:1,
-        outputs:1,
-        icon: "file.png",
-        label: function() {
-            return this.name||"net-ping";
-        },
-        paletteLabel: "net-ping"
-    });
-</script>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
 
 <script type="text/x-red" data-template-name="net-ping-node">
     <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <label for="node-input-host"><i class="fa fa-dot-circle-o"></i> Host</label>
+        <input type="text" id="node-input-host" placeholder="www.google.com">
+    </div>
+    <div class="form-row">
+        <label for="node-input-timeout"><i class="fa fa-clock-o"></i> Timeout (S)</label>
+        <input type="text" id="node-input-timeout" placeholder="5">
+    </div>
+    <div class="form-row">
+        <label for="node-input-retries"><i class="fa fa-refresh"></i> Number of retries</label>
+        <input type="text" id="node-input-retries" placeholder="1">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
 
 <script type="text/x-red" data-help-name="net-ping-node">
-    <p>A simple node that converts the message payloads into all lower-case characters</p>
+    <p>Pings a machine and returns the trip time in ms. Will perform ping on <b>any</b> input.</p>
+    <p>Returns <b>false</b> if no response received within the configured timeout period,  or if the host is unresolveable.</p>
+    <p>If the host field is left blank, <code>msg.host</code> can be used to set the host.</p>
+    <p>This node uses the net-ping node module which relies on raw sockets which is more efficient than using the system's ping command.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('net-ping-node',{
+        category: 'advanced-input',
+        color:"#fdf0c2",
+        defaults: {
+            name: {value:""},
+            host: {value:""},
+            timeout: {value:5, required:true, validate:RED.validators.number()},
+            retries: {value:1, required:true, validate:RED.validators.number()}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "alert.png",
+        label: function() {
+            return this.name || this.host || 'net ping';
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+        paletteLabel: 'net ping'
+    });
 </script>

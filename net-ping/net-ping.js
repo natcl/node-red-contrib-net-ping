@@ -5,16 +5,26 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
 
+        node.host = config.host || null;
+        node.timeout = parseInt(config.timeout);
+        node.retries = parseInt(config.retries);
+
         const options = {
-            retries: 1,
-            timeout: 2000
+            retries: node.retries,
+            timeout: node.timeout * 1000
         };
 
         node.session = ping.createSession(options);
         node.session.on('error', (error) => node.error(error));
 
         node.on('input', function(msg) {
-            node.session.pingHost(msg.host, function(error, target, sent, rcvd) {
+            var host;
+            if (msg.hasOwnProperty('host') && node.host === null) {
+                host = msg.host;
+            } else {
+                host = node.host;
+            }
+            node.session.pingHost(host, function(error, target, sent, rcvd) {
                 const ms = rcvd - sent;
                 msg.topic = target;
                 if (error) {

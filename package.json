@@ -1,7 +1,7 @@
 {
   "name": "node-red-contrib-net-ping",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Node-RED node for the net-ping module which uses raw sockets.",
   "dependencies": {
       "net-ping": "1.2.0"
   },
@@ -9,7 +9,7 @@
     "type": "git",
     "url": "https://github.com/natcl/node-red-contrib-net-ping.git"
   },
-  "keywords": ["node-red"],
+  "keywords": ["node-red", "ping"],
   "node-red": {
     "nodes": {
       "net-ping": "net-ping/net-ping.js"
