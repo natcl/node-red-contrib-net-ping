@@ -14,15 +14,21 @@ module.exports = function(RED) {
             var session = ping.createSession(options);
             session.on('error', (error) => node.error(error));
             for (var i = 0; i < targets.length; i++) {
-            	session.pingHost(targets[i], function(error, target) {
-            		if (error)
-            			if (error instanceof ping.RequestTimedOutError)
-            				node.warn(target + ": Not alive");
-            			else
-            				node.warn(target + ": " + error.toString ());
-            		else
-            			node.warn(target + ": Alive");
-            	});
+                session.pingHost(targets[i], function(error, target) {
+                    msg.topic = target;
+                    if (error) {
+                        if (error instanceof ping.RequestTimedOutError) {
+                            msg.payload = false;
+                            node.send(msg);
+                        } else {
+                            msg.payload = false;
+                            node.send(msg);
+                        }
+                    } else {
+                        msg.payload = true;
+                        node.send(msg);
+                    }
+                });
             }
         });
     }
