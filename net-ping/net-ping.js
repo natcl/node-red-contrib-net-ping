@@ -6,21 +6,24 @@ module.exports = function(RED) {
         var node = this;
 
         this.on('input', function(msg) {
+            var targets = msg.payload;
             const options = {
                 retries: 1,
                 timeout: 2000
             };
-            const session = ping.createSession(options);
+            var session = ping.createSession(options);
             session.on('error', (error) => node.error(error));
-            session.pingHost(msg.payload, (error, target) => {
-                if (error) {
-                    node.warn(error);
-                } else {
-                    node.warn(`Success ${target}`);
-                }
-            });
-            //msg.payload = msg.payload.toLowerCase();
-            //node.send(msg);
+            for (var i = 0; i < targets.length; i++) {
+            	session.pingHost(targets[i], function(error, target) {
+            		if (error)
+            			if (error instanceof ping.RequestTimedOutError)
+            				node.warn(target + ": Not alive");
+            			else
+            				node.warn(target + ": " + error.toString ());
+            		else
+            			node.warn(target + ": Alive");
+            	});
+            }
         });
     }
     RED.nodes.registerType("net-ping-node", NetPingNode);
