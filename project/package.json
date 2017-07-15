@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Node-RED template example project",
   "dependencies": {
-    "node-red": "latest"
+    "node-red": "0.17.4"
   },
   "repository": {
     "type": "git",
