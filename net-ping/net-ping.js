@@ -29,14 +29,14 @@ module.exports = function(RED) {
                 msg.topic = target;
                 if (error) {
                     if (error instanceof ping.RequestTimedOutError) {
-                        msg.payload = false;
+                        msg.payload = {"ms": 0, "res": false};
                         node.send(msg);
                     } else {
-                        msg.payload = false;
+                        msg.payload = {"ms": 0, "res": false};
                         node.send(msg);
                     }
                 } else {
-                    msg.payload = ms;
+                        msg.payload = {"ms": ms, "res": true};
                     node.send(msg);
                 }
             });
